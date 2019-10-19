@@ -2,7 +2,7 @@
     "name": "react_chat",
     "version": "1.0.0",
     "description": "",
-    "main": "static_src/index.js",
+    "main": "static_src/index.jsx",
     "scripts": {
         "start": "webpack --mode development",
         "build": "webpack",

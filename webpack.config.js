@@ -16,8 +16,9 @@ module.exports = {
                 include: `${__dirname}/static_src`,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
+                // use: ['babel-loader'],
                 query: {
-                    presets: ['@babel/env', '@babel/react'],
+                    presets: ['@babel/preset-env', '@babel/preset-react'],
                 }
             },
         ],
