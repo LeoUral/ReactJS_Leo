@@ -1,4 +1,3 @@
 export const script = () => {
-    console.log('бла бла бла');
-
+    console.log('Это файл script.js');
 };
