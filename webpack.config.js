@@ -10,17 +10,18 @@ module.exports = {
     },
 
     module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                include: `${__dirname}/static_src`,
+        rules: [{
+            test: /\.(jx|jsx)$/,
+            // include: `${__dirname}/static_src`,
+            exclude: /node_modules/,
+            use: {
                 loader: 'babel-loader',
-                exclude: /node_modules/,
-                // use: ['babel-loader'],
-                query: {
-                    presets: ['@babel/preset-env', '@babel/preset-react'],
-                }
-            },
-        ],
+            }
+
+            // use: 'babel-loader',
+            // query: {
+            //     presets: ["@babel/preset-env", "@babel/preset-react"],
+            // },
+        }],
     },
 };
