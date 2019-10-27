@@ -13,10 +13,16 @@ module.exports = {
         rules: [{
             test: /\.(jx|jsx)$/,
             // include: `${__dirname}/static_src`,
+            // include: path.resolve(__dirname, "static_src"),
+            // exclude: path.resolve(__dirname, "node_modules"),
             exclude: /node_modules/,
             use: {
                 loader: 'babel-loader',
-            }
+                // options: {
+
+                // }
+            },
+
 
             // use: 'babel-loader',
             // query: {
@@ -24,5 +30,8 @@ module.exports = {
             // },
         }],
     },
+    // resolve: {
+    //     modules: [path.resolve(__dirname, "static_src"), 'node_modules'],
+    //     extension: ['.js', '.jsx'],
+    // },
 };
-//lesson-1
