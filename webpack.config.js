@@ -19,16 +19,18 @@ module.exports = {
             use: {
                 loader: 'babel-loader',
                 // options: {
-
                 // }
             },
-
-
             // use: 'babel-loader',
             // query: {
             //     presets: ["@babel/preset-env", "@babel/preset-react"],
             // },
-        }],
+        },
+        {
+            test: /\.css$/,
+            loader: 'style-loader!css-loader',
+        },
+        ],
     },
     // resolve: {
     //     modules: [path.resolve(__dirname, "static_src"), 'node_modules'],
