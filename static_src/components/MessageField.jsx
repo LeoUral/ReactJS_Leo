@@ -1,17 +1,17 @@
 import React from 'react';
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
+import ListExampleChat from './ChartList.jsx'
 import Message from './Message.jsx';
 import '../styles/style.css';
 
 const botAnswers = ['Отстань...', 'Поговори с Алисой', 'Ты кто такой?', 'Иди своей дорогой'];
-const youAnswers = ['Все хорошо', 'Погода хорошая', 'Хрень полная'];
+// const youAnswers = ['Все хорошо', 'Погода хорошая', 'Хрень полная'];
 
-function rndYouAnswer(arrow) {
-    let reg = Math.floor(arrow.length * Math.random());
-
-    return arrow[reg];
-}
+// function rndYouAnswer(arrow) {
+//     let reg = Math.floor(arrow.length * Math.random());
+// return arrow[reg];
+// }
 
 function randomChoice(arr) {
     let registr = Math.floor(arr.length * Math.random());
@@ -40,14 +40,13 @@ export default class MessageField extends React.Component {
     componentDidUpdate() {
         // const { messages } = this.state;
         if (this.state.messages[this.state.messages.length - 1].sender === 'вы') {
-            setTimeout(() => this.setState({ messages: [...this.state.messages, { text: randomChoice(botAnswers), sender: "bot" }] }), 1000);
+            setTimeout(() => this.setState({ messages: [...this.state.messages, { text: randomChoice(botAnswers), sender: "bot" }] }), 200);
         }
     };
 
     // handleSendMessage = (event) => {
     //     // const { messages } = this.state;
     //     this.setState({ messages: [...this.state.messages, { text: event.target.value, sender: "вы" }] });
-
     // };
 
     handleClick = (message) => {
@@ -82,6 +81,11 @@ export default class MessageField extends React.Component {
             <div>
                 <h1>Чат</h1>
                 <div className="layout">
+
+                    <div className="chat-list">
+                        {ListExampleChat}
+                    </div>
+
                     <div className="message-field">
                         {messageElements}
                     </div>

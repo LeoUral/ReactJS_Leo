@@ -30,3 +30,7 @@
     color: gray;
     font-size: 14px;
 }
+
+.chat-list {
+    width: 300px;
+}
