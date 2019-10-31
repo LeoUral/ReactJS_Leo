@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
-import ListExampleChat from './ChartList.jsx'
 import Message from './Message.jsx';
 import '../styles/style.css';
+import PropTypes from 'prop-types';
 
 const botAnswers = ['Отстань...', 'Поговори с Алисой', 'Ты кто такой?', 'Иди своей дорогой'];
 // const youAnswers = ['Все хорошо', 'Погода хорошая', 'Хрень полная'];
@@ -37,10 +37,11 @@ export default class MessageField extends React.Component {
         this.textInput.current.focus();
     };
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         // const { messages } = this.state;
-        if (this.state.messages[this.state.messages.length - 1].sender === 'вы') {
-            setTimeout(() => this.setState({ messages: [...this.state.messages, { text: randomChoice(botAnswers), sender: "bot" }] }), 200);
+        if (prevState.messages.length < this.state.messages.length &&
+            this.state.messages[this.state.messages.length - 1].sender === 'вы') {
+            setTimeout(() => this.setState({ messages: [...this.state.messages, { text: randomChoice(botAnswers), sender: "bot" }] }), 1000);
         }
     };
 
@@ -79,16 +80,11 @@ export default class MessageField extends React.Component {
 
         return (
             <div>
-                <h1>Чат</h1>
-                <div className="layout">
+                <div className="message-field">
+                    {messageElements}
+                </div>
+                <div style={{ width: '100%', display: 'flex' }}>
 
-                    <div className="chat-list">
-                        {ListExampleChat}
-                    </div>
-
-                    <div className="message-field">
-                        {messageElements}
-                    </div>
                     <TextField ref={this.textInput}
                         // связываем ref <TextInput> с 'trxtInput' созданным в конструкторе
                         name='input'
@@ -98,8 +94,7 @@ export default class MessageField extends React.Component {
                         onChange={this.handleChange}
                         value={this.state.input}
                         onKeyUp={(event) => this.handleKeyUp(event, this.state.input)} />
-                    <FloatingActionButton
-                        onClick={() => this.handleClick(this.state.input)}>
+                    <FloatingActionButton onClick={() => this.handleClick(this.state.input)}>
                         <SendIcon />
                     </FloatingActionButton>
                 </div>
