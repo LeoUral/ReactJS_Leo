@@ -6,58 +6,54 @@ import '../styles/style.css';
 import PropTypes from 'prop-types';
 
 const botAnswers = ['Отстань...', 'Поговори с Алисой', 'Ты кто такой?', 'Иди своей дорогой'];
-// const youAnswers = ['Все хорошо', 'Погода хорошая', 'Хрень полная'];
-
-// function rndYouAnswer(arrow) {
-//     let reg = Math.floor(arrow.length * Math.random());
-// return arrow[reg];
-// }
 
 function randomChoice(arr) {
     let registr = Math.floor(arr.length * Math.random());
 
     return arr[registr];
-}
+};
 // исправление = 2
 export default class MessageField extends React.Component {
-    // создадим фокус на поле input с помощью ref
-    constructor(props) {
-        super(props);
-        //сщздаем ref в поле 'textInput' для хранения DOM-элемента
-        this.textInput = React.createRef();
-    }
+
+    static propTypes = {
+        chatId: PropTypes.number
+    };
+    static defultProps = {
+        chatId: 1,
+    };
+
     state = {
-        messages: [{ text: "Привет!", sender: 'bot' }, { text: "Как дела человек?", sender: 'bot' }],
+        chats: [[1, 2], [], []],
+        messages: [
+            { text: "Привет!", sender: 'bot' },
+            { text: "Как дела человек?", sender: 'bot' }
+        ],
         input: '',
     };
 
     //ставим фокус на <TextInput> при монтировании компонента
     //функция вызывается единожды после первой отрисовки компонета
-    componentDidMount() {
-        this.textInput.current.focus();
-    };
+    // componentDidMount() {
+    //     this.TextInput.current.focus();
+    // };
 
     componentDidUpdate(prevProps, prevState) {
-        // const { messages } = this.state;
         if (prevState.messages.length < this.state.messages.length &&
             this.state.messages[this.state.messages.length - 1].sender === 'вы') {
-            setTimeout(() => this.setState({ messages: [...this.state.messages, { text: randomChoice(botAnswers), sender: "bot" }] }), 1000);
+            // setTimeout(() => this.setState({ messages: [...this.state.messages, { text: randomChoice(botAnswers), sender: "bot" }] }), 1000);
+            setTimeout(() => this.sendMessage(randomChoice(botAnswers), 'bot'), 1000);
+            // setTimeout(() => this.sendMessage('Не приставай ко мне!', 'bot'), 1000);
         }
     };
 
-    // handleSendMessage = (event) => {
-    //     // const { messages } = this.state;
-    //     this.setState({ messages: [...this.state.messages, { text: event.target.value, sender: "вы" }] });
+    // handleClick = (message) => {
+    //     this.sendMessage(message)
     // };
 
-    handleClick = (message) => {
-        this.sendMessage(message)
-    };
-
-    handleKeyUp = (event) => {
+    handleKeyUp = (event, message, sender) => {
         if (event.keyCode === 13) {
             // this.setState({ messages: [...this.state.messages, { text: event.target.value, sender: 'вы' }] });
-            this.sendMessage(event.target.value)
+            this.sendMessage(message, sender)
         }
     };
 
@@ -67,38 +63,47 @@ export default class MessageField extends React.Component {
         // <input name="input"  (как пример)
     };
 
-    sendMessage = (message) => {
+    sendMessage = (message, sender) => {
+        const { chats } = this.state;
+        chats[this.props.chatId - 1] = [...chats[this.props.chatId - 1], this.state.messages.length + 1];
+
         this.setState({
-            messages: [...this.state.messages, { text: message, sender: 'вы' }],
+            messages: [...this.state.messages, { text: message, sender: sender }],
+            chats: chats,
             input: '',
         });
     };
 
     render() {
-        // const { messages } = this.state;
-        const messageElements = this.state.messages.map((messages) => <Message key={Message} text={messages.text} sender={messages.sender} />);
+        const { chats, messages, input } = this.state;
+        const { chatId } = this.props;
 
-        return (
-            <div>
-                <div className="message-field">
-                    {messageElements}
-                </div>
-                <div style={{ width: '100%', display: 'flex' }}>
+        const messageElements = chats[chatId - 1].map(messageId => (
+            <Message
+                key={messageId}
+                text={messages[messageId - 1].text}
+                sender={messages[messageId - 1].sender}
+            />));
 
-                    <TextField ref={this.textInput}
-                        // связываем ref <TextInput> с 'trxtInput' созданным в конструкторе
-                        name='input'
-                        fullWidth={true}
-                        hintText="Введите сообщение"
-                        style={{ fontSize: '22px' }}
-                        onChange={this.handleChange}
-                        value={this.state.input}
-                        onKeyUp={(event) => this.handleKeyUp(event, this.state.input)} />
-                    <FloatingActionButton onClick={() => this.handleClick(this.state.input)}>
-                        <SendIcon />
-                    </FloatingActionButton>
-                </div>
+        return [
+            <div className="message-field">
+                {messageElements}
+            </div>,
+            <div style={{ width: '100%', display: 'flex' }}>
+
+                <TextField
+                    name='input'
+                    fullWidth={true}
+                    hintText="Введите сообщение"
+                    style={{ fontSize: '22px' }}
+                    onChange={this.handleChange}
+                    value={input}
+                    onKeyUp={(event) => this.handleKeyUp(event, input, 'вы')} />
+                <FloatingActionButton onClick={() => this.sendMessage(input, 'вы')}>
+                    <SendIcon />
+                </FloatingActionButton>
             </div>
-        )
+
+        ]
     }
 }

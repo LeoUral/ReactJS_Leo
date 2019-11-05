@@ -8,15 +8,15 @@ export default class ChatList extends React.Component {
     render() {
         return (
             <List>
-                <a href='#'>
+                <Link to='/chat/1/'>
                     <ListItem primaryText='Chat 1' leftIcon={<ContentSend />} />
-                </a>
-                <a href='#'>
+                </Link>
+                <Link to='/chat/2/'>
                     <ListItem primaryText='Chat 2' leftIcon={<ContentSend />} />
-                </a>
-                <a href='#'>
+                </Link>
+                <Link to='/chat/3/'>
                     <ListItem primaryText='Chat 3' leftIcon={<ContentSend />} />
-                </a>
+                </Link>
             </List>
         )
     }

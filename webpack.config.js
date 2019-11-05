@@ -1,3 +1,4 @@
+const path = require("path");// ++
 const webpack = require('webpack');
 module.exports = {
     entry: {
@@ -13,9 +14,9 @@ module.exports = {
         rules: [{
             test: /\.(jx|jsx)$/,
             // include: `${__dirname}/static_src`,
-            // include: path.resolve(__dirname, "static_src"),
-            // exclude: path.resolve(__dirname, "node_modules"),
-            exclude: /node_modules/,
+            include: path.resolve(__dirname, "static_src"),// ++
+            exclude: path.resolve(__dirname, "node_modules"),// ++
+            // exclude: /node_modules/, // --
             use: {
                 loader: 'babel-loader',
                 // options: {
@@ -32,17 +33,18 @@ module.exports = {
         },
         ],
     },
-    // resolve: {
-    //     modules: [path.resolve(__dirname, "static_src"), 'node_modules'],
-    //     extension: ['.js', '.jsx'],
-    // },
-
-    // devServer: {
-    //     port: 8080,
-    //     historyApiFallBack: {
-    //         index: 'index.html'
-    //     }
-    // },
+    // ++
+    resolve: {
+        modules: [path.resolve(__dirname, "static_src"), 'node_modules'],
+        extensions: ['.js', '.jsx'],
+    },
+    // ++
+    devServer: {
+        port: 8080,
+        historyApiFallback: {
+            index: 'index.html'
+        }
+    },
 
     devtool: 'cheap-inline-module-source-map',
 };
