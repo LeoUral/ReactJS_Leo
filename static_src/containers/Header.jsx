@@ -1,9 +1,10 @@
 import React from 'react';
 import Profile from './Profile.jsx';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Avatar from 'material-ui/svg-icons/action/account-circle';
 import { removeChat } from '../actions/removeAction.js';
+
 
 export default class Header extends React.Component {
 

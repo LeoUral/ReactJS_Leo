@@ -38,8 +38,8 @@ export default function chatReducer(store = initialStore, action) {
             });
         }
         case REMOVE_CHAT: {
-            const chatId = action.chatId;
-            return update(store, store.splice(chatId, 1));
+            const chatIdRemove = action.chatId;
+            return update(store, store.splice(chatIdRemove, 1));
         }
 
         default:
