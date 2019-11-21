@@ -7,7 +7,7 @@ export default store => next => (action) => {
                 setTimeout(() => store.dispatch(
                     sendMessage(Object.keys(store.getState().messageReducer.messages).length + 1,
                         'Не приставай ко мне!!!',
-                        'bot', action.chatId)), 5000)
+                        'bot', action.chatId)), 1000)
             }
     }
     return next(action)

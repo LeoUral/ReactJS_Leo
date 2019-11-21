@@ -1,7 +1,7 @@
 import update from 'react-addons-update';
 import { SEND_MESSAGE } from '../actions/messageActions.js';
-import { ADD_CHAT } from '../actions/chatActions.js';
-import { REMOVE_CHAT } from '../actions/removeAction.js';
+import { ADD_CHAT, DELETE_CHAT } from '../actions/chatActions.js';
+
 
 const initialStore = {
     chats: {
@@ -37,9 +37,12 @@ export default function chatReducer(store = initialStore, action) {
                 },
             });
         }
-        case REMOVE_CHAT: {
-            const chatIdRemove = action.chatId;
-            return update(store, store.splice(chatIdRemove, 1));
+        case DELETE_CHAT: {
+            return update(store, { chats: store.chats.splice((action.chatId), 1) }
+                // chats: {
+                //     $splice: (store.chats[action.chatId], 1),
+                // },
+            );
         }
 
         default:
