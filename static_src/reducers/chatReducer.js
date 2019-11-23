@@ -38,11 +38,12 @@ export default function chatReducer(store = initialStore, action) {
             });
         }
         case DELETE_CHAT: {
-            return update(store, { chats: store.chats.splice((action.chatId), 1) }
-                // chats: {
-                //     $splice: (store.chats[action.chatId], 1),
-                // },
-            );
+            const deleteChat = store.chats.splice(action.chatId, 1);
+            return update(store, {
+                // store.chats.splice((action.chatId), 1),
+                // chats: Object.assign({}, store.chats),
+                chats: Object.assign({}, store.chats),
+            });
         }
 
         default:

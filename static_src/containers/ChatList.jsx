@@ -44,6 +44,7 @@ class ChatList extends React.Component {
 
     handleDeleteChat = (chatId) => {
         this.props.deleteChat(chatId);
+
     };
 
     render() {
